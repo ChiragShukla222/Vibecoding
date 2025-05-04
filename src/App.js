@@ -24,18 +24,18 @@ const AnimatedRoutes = () => {
   );
 };
 
-const App = () => {
+function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-navy text-lightest-slate">
+      <div className="min-h-screen bg-navy text-light-slate">
         <SideNav />
         <MobileNav />
-        <main className="relative">
+        <main className="ml-0 md:ml-24">
           <AnimatedRoutes />
         </main>
       </div>
     </Router>
   );
-};
+}
 
 export default App; 
