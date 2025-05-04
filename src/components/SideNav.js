@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const sections = [
   { id: 'home', name: 'Home', number: '01', path: '/' },
@@ -11,84 +12,70 @@ const sections = [
 ];
 
 const SideNav = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [activeSection, setActiveSection] = useState('home');
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScroll = window.scrollY;
-      setIsVisible(currentScroll < 100 || currentScroll < window.previousScroll);
-      window.previousScroll = currentScroll;
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navVariants = {
-    hidden: { opacity: 0, x: 50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.5,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: 20 },
-    visible: (i) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.5,
-        ease: 'easeOut',
-      },
-    }),
-  };
+    const currentPath = location.pathname;
+    const currentSection = sections.find(section => section.path === currentPath);
+    if (currentSection) {
+      setActiveSection(currentSection.id);
+    }
+  }, [location]);
 
   return (
-    <motion.nav
-      className="fixed right-8 top-1/2 -translate-y-1/2 hidden md:block"
-      variants={navVariants}
-      initial="hidden"
-      animate={isVisible ? 'visible' : 'hidden'}
-    >
-      <div className="flex flex-col items-end space-y-4">
-        {sections.map((section, i) => (
-          <motion.div
+    <nav className="fixed top-0 left-0 h-full w-24 bg-light-navy/5 backdrop-blur-sm z-50 hidden md:flex flex-col items-center justify-center">
+      <motion.div
+        className="flex flex-col items-center space-y-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {sections.map((section) => (
+          <Link
             key={section.id}
-            className="group flex items-center space-x-2"
-            variants={itemVariants}
-            custom={i}
-            whileHover={{ x: -5 }}
+            to={section.path}
+            className="group relative flex flex-col items-center"
           >
-            <Link
-              to={section.path}
-              className="flex items-center space-x-2"
+            <motion.span
+              className={`text-xs font-mono transition-colors duration-300 ${
+                activeSection === section.id ? 'text-teal' : 'text-slate'
+              }`}
+              whileHover={{ scale: 1.1 }}
             >
-              <span className="text-xs font-mono text-teal">{section.number}</span>
-              <span
-                className={`text-sm font-mono transition-colors duration-300 ${
-                  location.pathname === section.path ? 'text-teal' : 'text-slate'
-                }`}
-              >
-                {section.name}
-              </span>
-              <div
-                className={`h-px w-8 transition-colors duration-300 ${
-                  location.pathname === section.path ? 'bg-teal' : 'bg-slate/20'
-                }`}
+              {section.number}
+            </motion.span>
+            <motion.span
+              className={`text-xs font-mono transition-colors duration-300 ${
+                activeSection === section.id ? 'text-teal' : 'text-slate'
+              }`}
+              whileHover={{ scale: 1.1 }}
+            >
+              {section.name}
+            </motion.span>
+            {activeSection === section.id && (
+              <motion.div
+                className="absolute -left-2 w-1 h-8 bg-teal rounded-r"
+                layoutId="activeSection"
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               />
-            </Link>
-          </motion.div>
+            )}
+          </Link>
         ))}
-      </div>
-    </motion.nav>
+      </motion.div>
+    </nav>
   );
+};
+
+SideNav.propTypes = {
+  sections: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 export default SideNav; 

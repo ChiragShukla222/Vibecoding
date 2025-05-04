@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { MenuIcon, XIcon } from '@heroicons/react/outline';
+import { MenuIcon, XIcon } from '@heroicons/react/solid';
+import PropTypes from 'prop-types';
 
 const sections = [
   { id: 'home', name: 'Home', number: '01', path: '/' },
@@ -47,11 +48,21 @@ const MobileNav = () => {
     }),
   };
 
+  const handleMenuToggle = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const handleLinkClick = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="md:hidden">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        type="button"
+        onClick={handleMenuToggle}
         className="fixed top-4 right-4 p-2 text-slate hover:text-teal transition-colors duration-300"
+        aria-label={isOpen ? 'Close menu' : 'Open menu'}
       >
         {isOpen ? (
           <XIcon className="h-6 w-6" />
@@ -79,7 +90,7 @@ const MobileNav = () => {
                 >
                   <Link
                     to={section.path}
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleLinkClick}
                     className="flex items-center space-x-4"
                   >
                     <span className="text-xs font-mono text-teal">{section.number}</span>
@@ -99,6 +110,17 @@ const MobileNav = () => {
       </AnimatePresence>
     </div>
   );
+};
+
+MobileNav.propTypes = {
+  sections: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 export default MobileNav; 
