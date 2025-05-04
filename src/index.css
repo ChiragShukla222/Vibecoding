@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #0a192f;
+  --light-navy: #112240;
+  --lightest-navy: #233554;
+  --navy-shadow: rgba(2, 12, 27, 0.7);
+  --slate: #8892b0;
+  --light-slate: #a8b2d1;
+  --lightest-slate: #ccd6f6;
+  --white: #e6f1ff;
+  --teal: #64ffda;
+  --teal-tint: rgba(100, 255, 218, 0.1);
+}
+
+body {
+  @apply bg-navy text-light-slate;
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply text-lightest-slate font-bold;
+}
+
+a {
+  @apply text-teal hover:text-teal-tint transition-colors duration-300;
+}
+
+.section-heading {
+  @apply flex items-center text-teal font-mono text-sm mb-6;
+}
+
+.nav-link {
+  @apply text-slate hover:text-teal transition-colors duration-300;
+}
+
+.project-card {
+  @apply relative bg-light-navy rounded-lg p-6 transition-all duration-300;
+}
+
+.experience-tab {
+  @apply text-slate hover:text-teal hover:bg-teal-tint transition-colors duration-300;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--slate);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--light-slate);
+}
+
+/* Selection */
+::selection {
+  background: var(--teal-tint);
+  color: var(--teal);
+}
+
+/* Focus */
+*:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--teal-tint);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-navy text-light-slate;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-lightest-slate;
+  }
+
+  h1 {
+    @apply text-4xl sm:text-5xl md:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  p {
+    @apply text-slate leading-relaxed;
+  }
+
+  .section-heading::before {
+    content: '01.';
+    @apply mr-2;
+  }
+
+  .section-heading.about::before {
+    content: '02.';
+  }
+
+  .section-heading.projects::before {
+    content: '03.';
+  }
+
+  .section-heading.experience::before {
+    content: '04.';
+  }
+
+  .section-heading.contact::before {
+    content: '05.';
+  }
+
+  .nav-link.active {
+    @apply text-teal;
+  }
+
+  .nav-link::before {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-px bg-teal transition-all duration-300;
+  }
+
+  .nav-link:hover::before {
+    @apply w-full;
+  }
+
+  .tech-tag {
+    @apply text-xs font-mono text-teal;
+  }
+
+  .project-card:hover {
+    @apply transform -translate-y-1;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-block px-6 py-3 text-sm font-mono text-teal border border-teal rounded hover:bg-teal/10 transition-colors duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-teal text-navy hover:bg-teal/90;
+  }
+
+  .card {
+    @apply bg-light-navy rounded-lg p-6 shadow-lg;
+  }
+
+  .section-heading {
+    @apply flex items-center text-teal font-mono text-sm mb-6;
+  }
+
+  .nav-link {
+    @apply text-slate hover:text-teal transition-colors duration-300;
+  }
+
+  .project-card {
+    @apply relative bg-light-navy rounded-lg p-6 transition-all duration-300;
+  }
+
+  .experience-tab {
+    @apply text-slate hover:text-teal hover:bg-teal-tint transition-colors duration-300;
+  }
+}
+
+/* Animation utilities */
+@layer utilities {
+  .animate-slide-down {
+    animation: slideDown 0.5s ease-out forwards;
+  }
+
+  .animate-slide-left {
+    animation: slideLeft 0.5s ease-out forwards;
+  }
+
+  .animate-slide-right {
+    animation: slideRight 0.5s ease-out forwards;
+  }
+
+  .animate-scale {
+    animation: scale 0.3s ease-out forwards;
+  }
+
+  .animate-rotate {
+    animation: rotate 0.5s ease-out forwards;
+  }
+
+  .animate-bounce {
+    animation: bounce 1s infinite;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s infinite;
+  }
+
+  .animate-shake {
+    animation: shake 0.5s ease-out forwards;
+  }
+
+  .animate-flip {
+    animation: flip 0.5s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+}
+
+/* Keyframes */
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideRight {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scale {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(-10deg); opacity: 0; }
+  to { transform: rotate(0); opacity: 1; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes flip {
+  from { transform: rotateY(90deg); opacity: 0; }
+  to { transform: rotateY(0); opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px var(--teal); }
+  50% { box-shadow: 0 0 20px var(--teal); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-navy;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate/20 rounded-full hover:bg-slate/30 transition-colors duration-300;
+}
+
+/* Selection */
+::selection {
+  @apply bg-teal/20 text-teal;
+} 
